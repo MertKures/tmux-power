@@ -111,11 +111,14 @@ if "$show_session"; then
 fi
 
 # upload speed
-if "$show_upload_speed"; then
-    LS="$LS#[fg=$G2,bg=$G1]$rarrow#[fg=$TC,bg=$G1] $upload_speed_icon #{upload_speed} #[fg=$G1,bg=$G0]$rarrow"
-else
-    LS="$LS#[fg=$G2,bg=$G0]$rarrow"
-fi
+# if "$show_upload_speed"; then
+    # LS="$LS#[fg=$G2,bg=$G1]$rarrow#[fg=$TC,bg=$G1] $upload_speed_icon #{upload_speed} #[fg=$G1,bg=$G0]$rarrow"
+# else
+    # LS="$LS#[fg=$G2,bg=$G0]$rarrow"
+# fi
+
+LS="$LS#[fg=$G2,bg=$G0]$rarrow"
+
 if [[ $prefix_highlight_pos == 'L' || $prefix_highlight_pos == 'LR' ]]; then
     LS="$LS#{prefix_highlight}"
 fi
@@ -125,15 +128,24 @@ tmux_set status-left "$LS"
 tmux_set status-right-bg "$G0"
 tmux_set status-right-length 150
 RS="#[fg=$G2]$larrow#[fg=$TC,bg=$G2] $time_icon $time_format #[fg=$TC,bg=$G2]$larrow#[fg=$G0,bg=$TC] $date_icon $date_format "
+
 if "$show_download_speed"; then
-    RS="#[fg=$G1,bg=$G0]$larrow#[fg=$TC,bg=$G1] $download_speed_icon #{download_speed} $RS"
+    # RS="#[fg=$G1,bg=$G0]$larrow#[fg=$TC,bg=$G1] $download_speed_icon #{download_speed} $RS"
+    RS="$download_speed_icon #{download_speed} $RS"
 fi
+
+if "$show_upload_speed"; then
+    RS="#[fg=$G1,bg=$G0]$larrow#[fg=$TC,bg=$G1] $upload_speed_icon #{upload_speed} $RS"
+fi
+
 if "$show_web_reachable"; then
     RS=" #{web_reachable_status} $RS"
 fi
+
 if [[ $prefix_highlight_pos == 'R' || $prefix_highlight_pos == 'LR' ]]; then
     RS="#{prefix_highlight}$RS"
 fi
+
 tmux_set status-right "$RS"
 
 # Window status format
